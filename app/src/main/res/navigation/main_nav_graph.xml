@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/blogEntryListFragment">
+
+    <fragment
+        android:id="@+id/blogEntryListFragment"
+        android:name="com.example.androidexamenblog.ui.listaposts.BlogEntryListFragment"
+        android:label="fragment_blog_entry_list"
+        tools:layout="@layout/fragment_blog_entry_list" >
+        <action
+            android:id="@+id/action_blogEntryListFragment_to_detallePostFragment"
+            app:destination="@id/detallePostFragment" />
+        <action
+            android:id="@+id/action_blogEntryListFragment_to_crearPostFragment"
+            app:destination="@id/crearPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detallePostFragment"
+        android:name="com.example.androidexamenblog.ui.detallepost.DetallePostFragment"
+        android:label="fragment_detalle_post"
+        tools:layout="@layout/fragment_detalle_post" />
+    <fragment
+        android:id="@+id/crearPostFragment"
+        android:name="com.example.androidexamenblog.ui.crearpost.CrearPostFragment"
+        android:label="fragment_crear_post"
+        tools:layout="@layout/fragment_crear_post" />
+</navigation>
