@@ -114,4 +114,13 @@ class DetallePostFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(Utils.isNetworkAvailable(requireContext())){
+            (requireActivity() as MainActivity).clNoInternet?.visibility = View.GONE
+        }else {
+            (requireActivity() as MainActivity).clNoInternet?.visibility = View.VISIBLE
+        }
+    }
+
 }

@@ -7,19 +7,24 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
 import com.example.androidexamenblog.R
 import com.example.androidexamenblog.databinding.ActivityMainBinding
 import com.example.androidexamenblog.utils.NetworkMonitor
+import com.example.androidexamenblog.utils.Utils
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     var loader: TrailingCircularDotsLoader? = null
     var fabEntrada: ExtendedFloatingActionButton? = null
+    var clNoInternet: ConstraintLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         loader = binding.loader
         fabEntrada = binding.fabNuevaEntrada
+        clNoInternet = binding.clNoInternet
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
@@ -50,4 +56,9 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
     }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
 }

@@ -5,15 +5,23 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.androidexamenblog.AndroidExamenBlogApp
 import com.example.androidexamenblog.R
 import com.example.androidexamenblog.data.entities.BlogEntryRequest
 import com.example.androidexamenblog.data.remote.BlogService
+import com.example.androidexamenblog.data.repository.BlogRepository
 import com.example.androidexamenblog.utils.Resource
 import com.example.androidexamenblog.utils.Utils
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CrearPostViewModel(private val app: Application):AndroidViewModel (app){
+@HiltViewModel
+class CrearPostViewModel @Inject constructor(
+    private val app: Application,
+    private val repository: BlogRepository
+):AndroidViewModel (app){
 
     val crearPostResponse: MutableLiveData<Resource<Boolean>> = MutableLiveData()
 
@@ -29,7 +37,7 @@ class CrearPostViewModel(private val app: Application):AndroidViewModel (app){
 
             if(Utils.isNetworkAvailable(app)){
 
-                val result = BlogService.getInstance().postEntry(BlogEntryRequest(autor,contenido,titulo))
+                val result = repository.registrarEntrada(BlogEntryRequest(autor,contenido,titulo))
 
                 if(result.isSuccessful){
 

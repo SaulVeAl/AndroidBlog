@@ -9,12 +9,19 @@ import com.example.androidexamenblog.R
 import com.example.androidexamenblog.data.entities.BlogEntry
 import com.example.androidexamenblog.data.entities.EntryDetailResponse
 import com.example.androidexamenblog.data.remote.BlogService
+import com.example.androidexamenblog.data.repository.BlogRepository
 import com.example.androidexamenblog.utils.Resource
 import com.example.androidexamenblog.utils.Utils
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetallePostViewModel(private val app: Application): AndroidViewModel(app) {
+@HiltViewModel
+class DetallePostViewModel @Inject constructor(
+    private val app: Application,
+    private val repository: BlogRepository
+) : AndroidViewModel(app) {
 
     val detallePostResponse: MutableLiveData<Resource<EntryDetailResponse>> = MutableLiveData()
 
@@ -26,7 +33,7 @@ class DetallePostViewModel(private val app: Application): AndroidViewModel(app) 
 
             if(Utils.isNetworkAvailable(app)){
 
-                val result = BlogService.getInstance().getEntry(id)
+                val result = repository.obtenerEntrada(id)
 
                 if(result.isSuccessful){
 

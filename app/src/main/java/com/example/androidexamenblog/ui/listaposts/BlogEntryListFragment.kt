@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidexamenblog.R
@@ -20,12 +21,14 @@ import com.example.androidexamenblog.databinding.FragmentBlogEntryListBinding
 import com.example.androidexamenblog.ui.MainActivity
 import com.example.androidexamenblog.utils.Resource
 import com.example.androidexamenblog.utils.Utils
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BlogEntryListFragment : Fragment() {
 
     private lateinit var binding: FragmentBlogEntryListBinding
     private lateinit var adapter: BlogEntryAdapter
-    val viewModel: BlogEntryListViewModel by activityViewModels()
+    val viewModel: BlogEntryListViewModel by viewModels()
     var listaPosts = arrayListOf<BlogEntry>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +49,13 @@ class BlogEntryListFragment : Fragment() {
         initObservers()
         (requireActivity() as MainActivity).fabEntrada!!.setOnClickListener {
 
-            findNavController().navigate(R.id.action_blogEntryListFragment_to_crearPostFragment)
+            if(Utils.isNetworkAvailable(requireContext())){
+                (requireActivity() as MainActivity).clNoInternet?.visibility = View.GONE
+                findNavController().navigate(R.id.action_blogEntryListFragment_to_crearPostFragment)
+            }else {
+                (requireActivity() as MainActivity).clNoInternet?.visibility = View.VISIBLE
+                Toast.makeText(requireContext(),"No hay conexión a internet, no es posible registrar nuevas entradas al blog :D",Toast.LENGTH_SHORT).show()
+            }
 
         }
 
@@ -129,6 +138,13 @@ class BlogEntryListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        if(Utils.isNetworkAvailable(requireContext())){
+            (requireActivity() as MainActivity).clNoInternet?.visibility = View.GONE
+        }else {
+            (requireActivity() as MainActivity).clNoInternet?.visibility = View.VISIBLE
+        }
+
         viewModel.getLista()
         binding.etBusqueda.setText("")
     }

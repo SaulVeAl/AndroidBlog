@@ -7,6 +7,40 @@
     tools:context=".ui.MainActivity"
     android:background="@color/white">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clNoInternet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivNoInternet"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginHorizontal="24dp"
+            android:src="@drawable/baseline_signal_wifi_connected_no_internet_4_24"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNoInternet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="NO HAY CONEXIÓN A INTERNET"
+            app:layout_constraintStart_toEndOf="@id/ivNoInternet"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="24dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
         android:id="@+id/loader"
         android:layout_width="wrap_content"
@@ -21,7 +55,7 @@
         app:trailingcircular_dotsColor="@color/loader_defalut"
         app:trailingcircular_dotsRadius="11dp"
         app:trailingcircular_noOfTrailingDots="5"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabNuevaEntrada"
@@ -42,7 +76,7 @@
         android:layout_height="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clNoInternet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_nav_graph" />
